@@ -1,0 +1,23 @@
+name: Trigger Jenkins CI/CD
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Debug Jenkins URL (safe)
+        run: |
+          echo "Triggering Jenkins job..."
+
+      - name: Trigger Jenkins Job
+        run: |
+          curl -v -X POST "${{ secrets.JENKINS_URL }}"
