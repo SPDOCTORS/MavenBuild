@@ -1,0 +1,2 @@
+curl -X POST "${{ secrets.JENKINS_URL }}/job/Deploy-Java-App/build" \
+--user "${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_API_TOKEN }}"
