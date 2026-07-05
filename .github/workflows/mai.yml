@@ -1,0 +1,11 @@
+- name: Install jq
+  run: sudo apt-get update && sudo apt-get install -y jq
+
+- name: Trigger Jenkins Job
+  run: |
+    CRUMB=$(curl -s --user "${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_API_TOKEN }}" \
+    "${{ secrets.JENKINS_URL }}/crumbIssuer/api/json" | jq -r .crumb)
+
+    curl -X POST "${{ secrets.JENKINS_URL }}/job/Deploy-Java-App/build" \
+    --user "${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_API_TOKEN }}" \
+    -H "Jenkins-Crumb: $CRUMB"
